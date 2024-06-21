@@ -4,7 +4,7 @@ import { collection, addDoc, doc, getDoc } from 'firebase/firestore';
 import { useRouter } from 'next/router';
 
 const withActivityLogger = (Component) => {
-  return (props) => {
+  const WrappedComponent = (props) => {
     const router = useRouter();
 
     useEffect(() => {
@@ -42,6 +42,10 @@ const withActivityLogger = (Component) => {
 
     return <Component {...props} />;
   };
+
+  WrappedComponent.displayName = `withActivityLogger(${Component.displayName || Component.name || 'Component'})`;
+
+  return WrappedComponent;
 };
 
 export default withActivityLogger;
