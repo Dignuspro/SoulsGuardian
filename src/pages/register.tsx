@@ -5,8 +5,9 @@ function Register() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+      // function body
+  
     try {
       await createUserWithEmailAndPassword(auth, email, password);
       alert('Registrado con éxito');
