@@ -3,7 +3,7 @@ import { db } from '../firebase';
 import { collection, addDoc, doc, getDoc } from 'firebase/firestore';
 import { useRouter } from 'next/router';
 
-const withActivityLogger = (Component) => {
+const withActivityLogger = (Component: React.ComponentType<any>) => {
   const WrappedComponent = (props) => {
     const router = useRouter();
 
