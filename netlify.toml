@@ -2,7 +2,9 @@
   command = "npm run build"
   publish = ".next"
 
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
+[dev]
+  command = "npm run dev"
+  port = 3000
+
+[environment]
+  NODE_VERSION = "16.14.0"  # O cualquier versión estáble de Node 14, 16 o 18
