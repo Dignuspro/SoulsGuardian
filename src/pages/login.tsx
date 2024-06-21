@@ -1,15 +1,18 @@
 import { useState } from 'react';
+import { useRouter } from 'next/router';
 import { auth, signInWithEmailAndPassword } from '../firebase';
 
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
       await signInWithEmailAndPassword(auth, email, password);
       alert('Inicio de sesión exitoso');
+      router.push('/'); // redirecciona a la página de inicio
     } catch (error) {
       console.error(error);
       alert('Error al iniciar sesión');
