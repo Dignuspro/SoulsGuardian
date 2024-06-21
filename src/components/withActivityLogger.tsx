@@ -4,7 +4,7 @@ import { collection, addDoc, doc, getDoc } from 'firebase/firestore';
 import { useRouter } from 'next/router';
 
 const withActivityLogger = (Component: React.ComponentType<any>) => {
-  const WrappedComponent = (props) => {
+  const WrappedComponent = (props: Props) => {
     const router = useRouter();
 
     useEffect(() => {
