@@ -5,8 +5,9 @@ import { useRouter } from 'next/router';
 import { auth } from "../firebase";
 import { useAuthState } from 'react-firebase-hooks/auth';
 import styles from "../styles/Home.module.css";
+import withSettings from '../components/withSettings';
 
-const Home: NextPage = () => {
+const Home: NextPage = ({ settings }: any) => {
   const router = useRouter();
   const [user, loading, error] = useAuthState(auth);
 
@@ -50,9 +51,39 @@ const Home: NextPage = () => {
             <p>Ver reportes de actividad.</p>
           </a>
         </div>
+        <div>
+          <h2>Configuración de Filtrado</h2>
+          <pre>{JSON.stringify(settings, null, 2)}</pre>
+          <div>
+            <h3>Categorías Permitidas</h3>
+            <ul>
+              {settings.allowedCategories.map((category: string, index: number) => (
+                <li key={index}>{category}</li>
+              ))}
+            </ul>
+            <h3>Categorías Bloqueadas</h3>
+            <ul>
+              {settings.blockedCategories.map((category: string, index: number) => (
+                <li key={index}>{category}</li>
+              ))}
+            </ul>
+            <h3>Lista Blanca</h3>
+            <ul>
+              {settings.whitelist.map((site: string, index: number) => (
+                <li key={index}>{site}</li>
+              ))}
+            </ul>
+            <h3>Lista Negra</h3>
+            <ul>
+              {settings.blacklist.map((site: string, index: number) => (
+                <li key={index}>{site}</li>
+              ))}
+            </ul>
+          </div>
+        </div>
       </main>
     </div>
   );
 };
 
-export default Home;
+export default withSettings(Home);
