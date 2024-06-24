@@ -1,8 +1,10 @@
+// src/pages/settings.tsx
 import { useState, useEffect } from 'react';
-import { db, auth } from '../firebase'; // Importamos auth correctamente
+import { db, auth } from '../firebase';
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useRouter } from 'next/router';
+import withRole from '../components/withRole';
 
 interface Settings {
   blockedCategories: string[];
@@ -15,28 +17,9 @@ interface Settings {
 function SettingsPage() {
   const [user, loading] = useAuthState(auth);
   const [settings, setSettings] = useState<Settings | null>(null);
-  const [role, setRole] = useState('');
-  const router = useRouter();
 
   useEffect(() => {
-    if (!loading && user) {
-      const fetchUserRole = async () => {
-        const userDoc = await getDoc(doc(db, 'users', user.uid));
-        if (userDoc.exists() && userDoc.data().role) {
-          setRole(userDoc.data().role);
-          if (userDoc.data().role !== 'padre') {
-            router.push('/'); // Redirige a la página de inicio si no es 'padre'
-          }
-        }
-      };
-      fetchUserRole();
-    } else if (!user && !loading) {
-      router.push('/login');
-    }
-  }, [user, loading, router]);
-
-  useEffect(() => {
-    if (role === 'padre') {
+    if (user && !loading) {
       const fetchSettings = async () => {
         const settingsDoc = await getDoc(doc(db, 'settings', 'filtering'));
         if (settingsDoc.exists()) {
@@ -45,7 +28,7 @@ function SettingsPage() {
       };
       fetchSettings();
     }
-  }, [role]);
+  }, [user, loading]);
 
   const handleSave = async () => {
     if (settings) {
@@ -62,7 +45,7 @@ function SettingsPage() {
     }
   };
 
-  return role === 'padre' ? (
+  return (
     settings ? (
       <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
         <h1 className="mb-4 text-2xl font-bold">Configuraciones de Filtro</h1>
@@ -113,9 +96,7 @@ function SettingsPage() {
     ) : (
       <div>Loading...</div>
     )
-  ) : (
-    <div>No tienes permiso para ver esta página</div>
   );
 }
 
-export default SettingsPage;
+export default withRole(SettingsPage, 'padre');
