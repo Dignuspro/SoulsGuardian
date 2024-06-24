@@ -1,3 +1,4 @@
+// profile.tsx
 import { useState, useEffect } from 'react';
 import { auth, db } from '../firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
@@ -5,7 +6,7 @@ import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import { useRouter } from 'next/router';
 
 function Profile() {
-  const [user, loading, error] = useAuthState(auth);
+  const [user, loading] = useAuthState(auth);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const router = useRouter();
@@ -28,9 +29,7 @@ function Profile() {
     e.preventDefault();
     if (user) {
       const userDoc = doc(db, 'users', user.uid);
-      await updateDoc(userDoc, {
-        name,
-      });
+      await updateDoc(userDoc, { name });
       alert('Perfil actualizado');
     }
   };
