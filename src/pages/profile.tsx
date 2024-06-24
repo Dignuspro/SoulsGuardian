@@ -59,7 +59,7 @@ function Profile() {
         <input
           type="text"
           value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          onChange={(e) => setEmail(user.email || '')}
           placeholder="Email"
           required
           className="w-full p-2 mb-4 border border-gray-300 rounded"

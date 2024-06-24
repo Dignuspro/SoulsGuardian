@@ -1,9 +1,13 @@
 import Link from 'next/link';
 import { auth } from '../firebase';
+import { useRouter } from 'next/router';
 
 function NavBar() {
+  const router = useRouter();
+
   const handleLogout = async () => {
     await auth.signOut();
+    router.push('/login');
   };
 
   return (
