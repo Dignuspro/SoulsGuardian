@@ -9,7 +9,7 @@ interface Settings {
 }
 
 const withSettings = (WrappedComponent: React.ComponentType<any>) => {
-  return (props: any) => {
+  const WithSettingsComponent = (props: any) => {
     const [settings, setSettings] = useState<Settings | null>(null);
     const [loading, setLoading] = useState(true);
 
@@ -34,6 +34,12 @@ const withSettings = (WrappedComponent: React.ComponentType<any>) => {
 
     return <WrappedComponent {...props} settings={settings} />;
   };
+
+  const wrappedComponentName =
+    WrappedComponent.displayName || WrappedComponent.name || 'Component';
+  WithSettingsComponent.displayName = `withSettings(${wrappedComponentName})`;
+
+  return WithSettingsComponent;
 };
 
 export default withSettings;

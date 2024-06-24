@@ -1,10 +1,11 @@
-import type { NextPage } from "next";
-import Head from "next/head";
-import { useEffect } from "react";
+import type { NextPage } from 'next';
+import Head from 'next/head';
+import { useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { auth } from "../firebase";
+import Link from 'next/link';
+import { auth } from '../firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import styles from "../styles/Home.module.css";
+import styles from '../styles/Home.module.css';
 import withSettings from '../components/withSettings';
 
 const Home: NextPage = ({ settings }: any) => {
@@ -34,22 +35,30 @@ const Home: NextPage = ({ settings }: any) => {
           Esta es tu página de inicio personalizada.
         </p>
         <div className={styles.grid}>
-          <a href="/profile" className={styles.card}>
-            <h3>Perfil &rarr;</h3>
-            <p>Ver y actualizar tu perfil.</p>
-          </a>
-          <a href="/monitoring" className={styles.card}>
-            <h3>Monitoreo &rarr;</h3>
-            <p>Monitorea la actividad en línea de tus hijos.</p>
-          </a>
-          <a href="/settings" className={styles.card}>
-            <h3>Configuraciones &rarr;</h3>
-            <p>Configuraciones de control parental.</p>
-          </a>
-          <a href="/reports" className={styles.card}>
-            <h3>Reportes &rarr;</h3>
-            <p>Ver reportes de actividad.</p>
-          </a>
+          <Link href="/profile">
+            <a className={styles.card}>
+              <h3>Perfil &rarr;</h3>
+              <p>Ver y actualizar tu perfil.</p>
+            </a>
+          </Link>
+          <Link href="/monitoring">
+            <a className={styles.card}>
+              <h3>Monitoreo &rarr;</h3>
+              <p>Monitorea la actividad en línea de tus hijos.</p>
+            </a>
+          </Link>
+          <Link href="/settings">
+            <a className={styles.card}>
+              <h3>Configuraciones &rarr;</h3>
+              <p>Configuraciones de control parental.</p>
+            </a>
+          </Link>
+          <Link href="/reports">
+            <a className={styles.card}>
+              <h3>Reportes &rarr;</h3>
+              <p>Ver reportes de actividad.</p>
+            </a>
+          </Link>
         </div>
         <div>
           <h2>Configuración de Filtrado</h2>
