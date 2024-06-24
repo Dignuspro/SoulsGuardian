@@ -9,6 +9,7 @@ function Profile() {
   const [user, loading] = useAuthState(auth);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
+  const [role, setRole] = useState('');
   const router = useRouter();
 
   useEffect(() => {
@@ -19,6 +20,7 @@ function Profile() {
         if (docSnap.exists()) {
           setName(docSnap.data().name || '');
           setEmail(user.email || '');
+          setRole(docSnap.data().role || '');
         }
       };
       fetchUserData();
@@ -29,7 +31,7 @@ function Profile() {
     e.preventDefault();
     if (user) {
       const userDoc = doc(db, 'users', user.uid);
-      await updateDoc(userDoc, { name });
+      await updateDoc(userDoc, { name, role });
       alert('Perfil actualizado');
     }
   };
@@ -64,6 +66,16 @@ function Profile() {
           className="w-full p-2 mb-4 border border-gray-300 rounded"
           disabled
         />
+        {role === 'padre' && (
+          <select
+            value={role}
+            onChange={(e) => setRole(e.target.value)}
+            className="w-full p-2 mb-4 border border-gray-300 rounded"
+          >
+            <option value="padre">Padre</option>
+            <option value="hijo">Hijo</option>
+          </select>
+        )}
         <button type="submit" className="w-full p-2 text-white bg-blue-500 rounded">
           Guardar Cambios
         </button>
