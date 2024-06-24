@@ -2,16 +2,30 @@ import { useState, useEffect } from 'react';
 import { db } from '../firebase';
 import { collection, query, getDocs } from 'firebase/firestore';
 
+interface Activity {
+  id: string;
+  url: string;
+  timestamp: {
+    seconds: number;
+    nanoseconds: number;
+  };
+}
+
 function Monitoring() {
-  const [activities, setActivities] = useState([]);
+  const [activities, setActivities] = useState<Activity[]>([]);
 
   useEffect(() => {
     const fetchActivities = async () => {
       const q = query(collection(db, 'activities'));
       const querySnapshot = await getDocs(q);
-      const activityList = [];
+      const activityList: Activity[] = [];
       querySnapshot.forEach((doc) => {
-        activityList.push({ id: doc.id, ...doc.data() });
+        const data = doc.data();
+        activityList.push({
+          id: doc.id,
+          url: data.url,
+          timestamp: data.timestamp,
+        });
       });
       setActivities(activityList);
     };
