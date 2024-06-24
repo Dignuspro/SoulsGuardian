@@ -2,7 +2,8 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { auth, db } from '../firebase';
-import { createUserWithEmailAndPassword, setDoc, doc } from 'firebase/firestore';
+import { createUserWithEmailAndPassword } from 'firebase/auth';  // Corregir esta línea
+import { setDoc, doc } from 'firebase/firestore';  // Esta línea es correcta
 
 function Register() {
   const [email, setEmail] = useState('');
