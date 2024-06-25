@@ -1,9 +1,9 @@
-// register.tsx
+// src/pages/register.tsx
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { auth, db } from '../firebase';
-import { createUserWithEmailAndPassword } from 'firebase/auth';  // Corregir esta línea
-import { setDoc, doc } from 'firebase/firestore';  // Esta línea es correcta
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { setDoc, doc } from 'firebase/firestore';
 
 function Register() {
   const [email, setEmail] = useState('');
@@ -19,10 +19,10 @@ function Register() {
       await setDoc(doc(db, 'users', user.uid), {
         name,
         email,
-        role: 'hijo'  // Puede ser 'hijo' o 'padre'
+        role: 'hijo'  // Por defecto asignar rol 'hijo'
       });
       alert('Registro exitoso');
-      router.push('/');  // Redirige a la página de inicio
+      router.push('/');  // Redirige a la página principal
     } catch (error) {
       console.error(error);
       alert('Error al registrar');
