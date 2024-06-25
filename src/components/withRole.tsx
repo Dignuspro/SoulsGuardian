@@ -6,7 +6,7 @@ import { auth, db } from '../firebase';
 import { doc, getDoc } from 'firebase/firestore';
 
 const withRole = (Component: React.ComponentType, requiredRole: string) => {
-  return (props: any) => {
+  const ComponentWithRole = (props: any) => {
     const [user, loading] = useAuthState(auth);
     const router = useRouter();
 
@@ -33,6 +33,10 @@ const withRole = (Component: React.ComponentType, requiredRole: string) => {
 
     return <Component {...props} />;
   };
+
+  ComponentWithRole.displayName = `WithRole(${Component.displayName || Component.name || 'Component'})`;
+
+  return ComponentWithRole;
 };
 
 export default withRole;
